@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>DisruptionIQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080D17;--bg2:#101B2C;--cy:#00D5FF;--ice:#8BEAFF;--sil:#C5D0DF;--am:#FFAA48;--rd:#FF5368;--gn:#36D6A0;--ln:#1c2b42;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--sil);font:15px/1.55 Inter,system-ui,sans-serif;background-image:linear-gradient(#0f1a2b55 1px,transparent 1px),linear-gradient(90deg,#0f1a2b55 1px,transparent 1px);background-size:36px 36px}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;color:#eef4fb;font-weight:700;letter-spacing:-.01em}
+.m,td.m,.mono{font-family:'JetBrains Mono',monospace}
+#shell{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+nav{background:#0a1220ee;border-right:1px solid var(--ln);padding:18px 12px;position:sticky;top:0;height:100vh;overflow:auto}
+.logo{font:700 20px 'Space Grotesk';color:#fff;padding:4px 10px 16px}.logo b{color:var(--cy)}
+nav a{display:block;padding:9px 12px;border-radius:8px;color:var(--sil);text-decoration:none;font-size:14px;cursor:pointer;border:1px solid transparent}
+nav a:hover{background:#13213a}nav a.on{background:#0d2a3c;border-color:#0b5a73;color:#fff}
+main{padding:0 28px 90px;min-width:0}
+.top{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--ln);flex-wrap:wrap;position:relative}
+.crumb{font-size:13px;color:#7f90a8}.crumb b{color:var(--ice);font-weight:500}
+.tags{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pill{font:500 11px 'JetBrains Mono';padding:4px 9px;border-radius:99px;border:1px solid var(--ln);color:var(--sil)}
+.pill.sim{color:var(--am);border-color:#5c4020}
+button{font:500 13px Inter;cursor:pointer;border-radius:8px;padding:9px 15px;border:1px solid #0b5a73;background:#0d2a3c;color:var(--ice)}
+button:hover{background:#12405a}button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+button.pri{background:var(--cy);color:#04141c;border-color:var(--cy);font-weight:700}button.pri:hover{background:var(--ice)}
+button.gh{background:transparent;border-color:var(--ln);color:var(--sil)}button:disabled{opacity:.4;cursor:default}
+.card{background:linear-gradient(160deg,#122036cc,#0c1626cc);border:1px solid var(--ln);border-radius:12px;padding:18px;backdrop-filter:blur(6px)}
+.card h3{font-size:16px;margin-bottom:10px}
+.grid{display:grid;gap:14px}.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}.g4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.pg{padding-top:22px}.pg>*+*{margin-top:14px}.sub{color:#8a9bb3;margin:4px 0 0;max-width:68ch}
+.kpi b{display:block;font:500 28px 'JetBrains Mono';color:#fff}.kpi span{font-size:12.5px;color:#8a9bb3}
+.G{color:var(--gn)}.A{color:var(--am)}.R{color:var(--rd)}.C{color:var(--cy)}
+.chip{font:500 11px 'JetBrains Mono';padding:3px 8px;border-radius:6px;border:1px solid}
+.chip.G{border-color:#1c5a48;background:#0c2a24}.chip.A{border-color:#6b4a1c;background:#2b2010}.chip.R{border-color:#6b2431;background:#2b1017}
+table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;color:#7f90a8;font-weight:500;padding:8px 8px;border-bottom:1px solid var(--ln)}td{padding:8px;border-bottom:1px solid #15233a;vertical-align:top}
+.sc{width:100%;text-align:left;margin-bottom:8px;display:block;padding:12px;background:#0c1626;border-color:var(--ln);color:var(--sil)}.sc.on{border-color:var(--cy);background:#0c2536}.sc small{display:block;color:#7f90a8;margin-top:2px}
+.br{display:grid;grid-template-columns:120px 1fr 70px;gap:10px;align-items:center;margin:7px 0;font-size:12.5px}.br i{display:block;height:10px;border-radius:5px;background:var(--cy);min-width:2px;transition:width .5s}.br b{font:500 12px 'JetBrains Mono';color:#fff;text-align:right}
+.stk{display:flex;height:14px;border-radius:6px;overflow:hidden;margin:5px 0}.stk i{display:block;height:100%}
+.hero{padding:36px 0 8px}.hero h1{font-size:clamp(28px,4.6vw,52px);line-height:1.05;max-width:18ch}.hero p{max-width:62ch;color:#9fb0c6;font-size:16px}
+.cta{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+svg text{font-family:Inter,sans-serif}
+.flow{stroke-dasharray:5 9;animation:fl 1.2s linear infinite}.hold{stroke-dasharray:3 6;animation:none}
+@keyframes fl{to{stroke-dashoffset:-14}}
+.nd{cursor:pointer}.nd:hover rect{stroke-width:2.5}.pu{animation:pu 1s ease-in-out infinite}@keyframes pu{50%{opacity:.45}}
+.note{border-left:3px solid var(--am);padding:8px 12px;background:#221a10;border-radius:0 8px 8px 0;font-size:13px;color:#e8cfa8}
+.ok{border-color:var(--gn);background:#0c2a24;color:#bfeede}.bad{border-color:var(--rd);background:#2b1017;color:#f3c3cb}
+.bell{position:absolute;right:0;top:56px;width:340px;max-width:92vw;z-index:30}
+.demo{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));width:min(760px,94vw);z-index:40;border-color:var(--cy);box-shadow:0 0 40px #00d5ff22}
+input[type=range],select{accent-color:var(--cy);background:#0c1626;color:var(--sil);border:1px solid var(--ln);border-radius:8px;padding:7px}
+.tw{overflow-x:auto}.tw svg{min-width:640px}
+@media(max-width:860px){#shell{grid-template-columns:1fr}nav{position:static;height:auto;display:flex;overflow-x:auto;gap:4px;padding:8px}nav a{white-space:nowrap}.logo{display:none}main{padding:0 14px 90px}}
+@media(prefers-reduced-motion:reduce){.flow,.pu{animation:none}}
+</style></head><body><div id="shell"><nav id="nav"></nav><main><div class="top" id="top"></div><div id="app"></div></main></div><div id="demo"></div>
+<script>
+const H=7,SAFE=20,UPD=250,ORD=1320,fmt=x=>Math.round(x).toLocaleString('en-US'),$=s=>document.querySelector(s);
+const U=b=>({bat:b,bms:1,mot:1,ctl:1,chg:1,har:1});
+const MODELS=[{n:'Volt Urban',d:120,o:640,u:U(1)},{n:'Volt Sprint',d:80,o:420,u:U(1)},{n:'Volt Cargo',d:50,o:260,u:U(2)}];
+const COMPS=[{k:'bat',n:'Li-ion battery packs',sup:'S1',A:300,B:200},{k:'bms',n:'Battery Management Systems',sup:'S3',A:320,B:180},{k:'mot',n:'Electric motors',sup:'S2',A:260,B:190},{k:'ctl',n:'Motor controllers',sup:'S2',A:240,B:160},{k:'chg',n:'Chargers',sup:'S3',A:250,B:140},{k:'har',n:'Wiring harnesses',sup:'S3',A:400,B:220}];
+const SUP={S1:{n:'CellForge Cells',rel:94},S2:{n:'DriveTek Motors',rel:91},S3:{n:'Voltline Electronics',rel:96}};
+const SC=[
+{n:'Battery shipment delayed 3 days',d:'CellForge cell shipment slips three days on route R1.',dl:{bat:3},rt:{R1:'risk'}},
+{n:'Motor controller supplier failure',d:'DriveTek controller line is offline for four days.',dl:{ctl:4}},
+{n:'Battery warehouse thermal excursion',d:'Warehouse A cold-chain fault pushes lots past configured limits.',thermal:1},
+{n:'EV motor inventory shortage',d:'Motor stock at Warehouse A falls 75% after a count correction.',sm:{mot:.25},dl:{mot:1}},
+{n:'Transportation route disruption',d:'Route R1 closes; battery, motor and harness inbound slip two days.',dl:{bat:2,mot:2,har:2},rt:{R1:'bad',R2:'risk'}},
+{n:'Sudden EV demand increase',d:'Dealer pre-orders lift demand 35% for the next week.',dm:1.35}];
+const PAGES=[['exec','Executive Intelligence'],['ev','EV Manufacturing Intelligence'],['twin','Digital Twin'],['disrupt','Disruption Center'],['thermal','Thermal Inventory Intelligence'],['rec','AI Recovery'],['val','Validation Center'],['appr','Approval Workflow'],['ana','Analytics & Reports']];
+const S={sc:0,res:null,ran:false,running:false,appr:[0,0,0],sel:null,wh:'all',calc:{k:'bat',d:3},demo:-1,bell:false,page:'exec'};
+/* thermal rules: illustrative demo thresholds, not a battery-health claim */
+const LIM=35,HARD=42,HRS=8;
+const cls=l=>(l.peak>=HARD||l.h>=HRS)?'R':(l.peak>LIM||l.h>0)?'A':'G';
+const why=l=>({R:l.peak>=HARD?`Peak ${l.peak}°C reached the ${HARD}°C demo hard limit`:`${l.h}h above limit reached the ${HRS}h demo cap`,A:`Peak ${l.peak}°C, ${l.h}h above ${LIM}°C limit: inspection required`,G:`Peak ${l.peak}°C stayed within the ${LIM}°C limit`})[cls(l)];
+function lots(sc){return{A:sc&&sc.thermal?[{id:'A-1',q:150,peak:33,h:0},{id:'A-2',q:60,peak:37,h:2},{id:'A-3',q:90,peak:43,h:7}]:[{id:'A-1',q:300,peak:31,h:0}],B:[{id:'B-1',q:80,peak:33,h:0},{id:'B-2',q:50,peak:38,h:3},{id:'B-3',q:70,peak:44,h:9}]}}
+function elig(L){const o={};for(const w in L){o[w]={G:0,A:0,R:0};L[w].forEach(l=>o[w][cls(l)]+=l.q)}return o}
+function sim(sc){sc=sc||{};const dm=sc.dm||1,L=lots(sc),E=elig(L),dn={};
+MODELS.forEach(m=>{for(const k in m.u)dn[k]=(dn[k]||0)+m.d*m.u[k]});
+const rows=COMPS.map(c=>{let A=c.A,B=c.B;if(c.k=='bat'){A=E.A.G;B=E.B.G}
+const sm=(sc.sm&&sc.sm[c.k])??1;A*=sm;B*=sm;const dl=(sc.dl&&sc.dl[c.k])||0,inb=Math.round(dn[c.k]*.87),dem=Math.round(dn[c.k]*H*dm),sup=Math.round(A+inb*(H-dl)),sh=Math.max(0,dem-sup);
+return{...c,need:Math.round(dn[c.k]*dm),inb,dl,dem,supply:sup,sh,sA:A,sB:B,cover:A/(dn[c.k]*dm)}});
+const worst=rows.reduce((a,b)=>b.sh/b.dem>a.sh/a.dem?b:a),cap=worst.sh/worst.dem;
+const units=Math.round(cap*UPD*H*dm),orders=Math.round(cap*ORD);
+return{sc,L,E,rows,worst,cap,units,orders,days:+(cap*H).toFixed(1),dm,pm:MODELS.map(m=>({n:m.n,loss:Math.round(m.d*H*dm*cap)})),ful:+(98-cap*100).toFixed(1)}}
+const B0=sim({});
+const R=()=>S.res||B0;
+function plans(r){const w=r.worst,sh=w.sh;if(!sh)return null;
+const mk=(id,n,q,days,unit,nv)=>{q=Math.min(q,nv?q:sh);return{id,n,q,days,unit,cost:q*unit,nv}};
+const A=mk('A','Transfer eligible inventory from Warehouse B',Math.max(0,w.sB-SAFE),1,150),Bp=mk('B','Source from alternative supplier',400,4,900),
+C=mk('C','Expedite transportation',w.dl?Math.min(350,Math.round(w.inb*w.dl*.6)):0,1.5,420),N=mk('A*','Transfer all Warehouse B stock (naive)',w.B,1,150,1);
+const inel=w.k=='bat'?r.E.B.A+r.E.B.R:0;
+const chk=p=>{const rem=p.nv?0:p.id=='A'?w.sB-p.q:999;return[
+['Available inventory',p.q>0,p.q>0?`${fmt(p.q)} units deliverable`:p.id=='C'?'No delayed shipment to expedite':'Nothing deliverable'],
+['Component compatibility',true,'Same part number and spec'],
+['Thermal eligibility',!(p.nv&&inel),p.nv&&inel?`${inel} of ${w.B} packs fail eligibility checks`:'Only eligible lots considered'],
+['Warehouse stock remaining',rem>=SAFE,rem>=SAFE?'Source keeps safety stock':'Transfer would create a critical shortage at the source warehouse'],
+['EV manufacturing requirements',true,'Quantity capped to plant need'],
+['Supplier delivery feasibility',p.id!='C'||p.q>0,p.id=='B'?'Alt supplier lot cap 400':'Carrier capacity available'],
+['Customer delivery commitments',p.days<=5,`${p.days} days to deliver`],
+['Secondary shortage risk',rem>=SAFE,rem>=SAFE?'No new shortage created':'New shortage at source']]};
+const all=[N,A,Bp,C].map(p=>{const c=chk(p),f=c.find(x=>!x[1]);return{...p,c,ok:!f,reason:f?f[2]:'',ord:Math.round(p.q/sh*r.orders),risk:p.id=='A'?'Low':p.id=='C'?'Medium':'Low'}});
+let left=sh,bun=[];all.filter(p=>p.ok&&!p.nv).sort((a,b)=>a.unit-b.unit).forEach(p=>{if(left>0){const t=Math.min(left,p.q);bun.push({p,t});left-=t}});
+const rec=sh-left,cost=bun.reduce((s,b)=>s+b.t*b.p.unit,0),days=Math.max(0,...bun.map(b=>b.p.days));
+const capAfter=Math.max(...r.rows.map(x=>(x.k==w.k?left:x.sh)/x.dem));
+return{all,bun,rec,cost,days,left,sh,capAfter,unitsAfter:Math.round(capAfter*UPD*H*r.dm),ordAfter:Math.round(capAfter*ORD)}}
+/* ---------- twin ---------- */
+const N=[['S1',90,80,'CellForge'],['S2',90,200,'DriveTek'],['S3',90,320,'Voltline'],['R1',260,120,'Route R1'],['R2',260,280,'Route R2'],['WA',430,120,'Warehouse A'],['WB',430,280,'Warehouse B'],['P',600,200,'EV Plant'],['O',750,200,'Orders']];
+const ED=[['S1','R1'],['S2','R1'],['S2','R2'],['S3','R2'],['R1','WA'],['R2','WA'],['R2','WB'],['WA','P'],['WB','P'],['P','O']];
+function st(id,r){if(S.running)return'sim';const sc=r.sc||{};
+if(id[0]=='S'){const c=r.rows.filter(x=>x.sup==id);return c.some(x=>x.sh>0)?'bad':c.some(x=>x.dl>0)?'risk':'ok'}
+if(id[0]=='R')return(sc.rt&&sc.rt[id])||'ok';
+if(id=='WA')return sc.thermal?'bad':'ok';if(id=='WB')return'risk';
+return r.cap>.15?'bad':r.cap>0?'risk':id=='P'?'ok':'ok'}
+const COL={ok:'#36D6A0',risk:'#FFAA48',bad:'#FF5368',sim:'#00D5FF'};
+function twin(r,click){const s={};N.forEach(n=>s[n[0]]=st(n[0],r));
+let g=ED.map(([a,b])=>{const p=N.find(n=>n[0]==a),q=N.find(n=>n[0]==b),c=COL[s[a]=='bad'?'bad':s[a]=='sim'?'sim':s[b]=='bad'?'risk':s[a]];
+return`<line x1="${p[1]}" y1="${p[2]}" x2="${q[1]}" y2="${q[2]}" stroke="${c}" stroke-width="2" opacity=".75" class="${s[a]=='bad'?'hold':'flow'}"/>`}).join('');
+g+=N.map(([id,x,y,l])=>{const c=COL[s[id]],w=id=='P'?110:96,sh=id[0]=='S'?'M':id[0]=='R'?'T':id=='O'?'C':'W';
+return`<g class="nd ${s[id]=='sim'?'pu':''}" ${click?`onclick="A('sel','${id}')" tabindex="0" onkeydown="if(event.key=='Enter')A('sel','${id}')"`:''}><rect x="${x-w/2}" y="${y-24}" width="${w}" height="48" rx="${id[0]=='R'?24:8}" fill="#0c1626" stroke="${c}" stroke-width="${S.sel==id?3:1.6}"/><text x="${x}" y="${y-3}" text-anchor="middle" fill="#eef4fb" font-size="12.5" font-weight="500">${l}</text><text x="${x}" y="${y+13}" text-anchor="middle" fill="${c}" font-size="10.5" font-family="JetBrains Mono">${id=='P'?Math.round((1-r.cap)*100)+'% capacity':id=='O'?fmt(r.orders)+' at risk':s[id]=='sim'?'simulating':s[id]=='ok'?'normal':s[id]=='risk'?'at risk':'disrupted'}</text></g>`}).join('');
+const cols=['Suppliers','Transportation','Smart warehouses','EV assembly plant','Customer orders'];
+return`<div class="tw"><svg viewBox="0 0 820 380" role="img" aria-label="Supply chain digital twin">${[90,260,430,600,750].map((x,i)=>`<text x="${x}" y="22" text-anchor="middle" fill="#6f819a" font-size="11">${cols[i]}</text>`).join('')}${g}</svg></div>
+<div style="display:flex;gap:14px;font-size:12px;flex-wrap:wrap;margin-top:6px">${[['ok','Normal'],['risk','At risk'],['bad','Disrupted'],['sim','Active simulation']].map(([k,t])=>`<span><b style="color:${COL[k]}">●</b> ${t}</span>`).join('')}</div>`}
+function node(id,r){const n=N.find(x=>x[0]==id),c=id[0]=='S'?`<p>${SUP[id].n}: reliability <b class="m">${SUP[id].rel}%</b>. Supplies ${COMPS.filter(x=>x.sup==id).map(x=>x.n).join(', ')}.</p>`+r.rows.filter(x=>x.sup==id).map(x=>`<p class="m">${x.k}: delay ${x.dl}d, shortage ${fmt(x.sh)}</p>`).join('')
+:id[0]=='R'?`<p>Status: <b>${st(id,r)}</b>. ${id=='R1'?'Carries cells, motors and harnesses to Warehouse A.':'Carries controllers and electronics to both warehouses.'}</p>`
+:id[0]=='W'?(id=='WA'?`<p>Battery lots: ${r.L.A.map(l=>`<span class="chip ${cls(l)}">${l.id} ${l.q}</span>`).join(' ')}</p><p class="m">Eligible ${r.E.A.G} / review ${r.E.A.A} / excluded ${r.E.A.R}</p>`:`<p>Battery lots: ${r.L.B.map(l=>`<span class="chip ${cls(l)}">${l.id} ${l.q}</span>`).join(' ')}</p><p class="m">Eligible ${r.E.B.G} / review ${r.E.B.A} / excluded ${r.E.B.R}</p>`)
+:id=='P'?`<p>Capacity ${Math.round((1-r.cap)*100)}%. Units at risk this week: <b class="m">${fmt(r.units)}</b>.</p>`+r.pm.map(m=>`<p class="m">${m.n}: -${m.loss} units</p>`).join(''):`<p>Orders at risk: <b class="m">${fmt(r.orders)}</b> of ${fmt(ORD)}. Projected fulfilment ${r.ful}%.</p>`;
+return`<div class="card"><h3>${n[3]}</h3>${c}</div>`}
+/* ---------- helpers ---------- */
+const bars=(a,max,col)=>a.map(([l,v,c,t])=>`<div class="br"><span>${l}</span><i style="width:${Math.min(100,v/max*100)}%;background:${c||col||'var(--cy)'}"></i><b>${t??fmt(v)}</b></div>`).join('');
+const empty=`<div class="card"><h3>No simulation has run yet</h3><p class="sub">Pick a scenario and run it. Every figure on this page is calculated from the scenario you run.</p><div class="cta"><button class="pri" onclick="A('run')">Run simulation</button><button class="gh" onclick="A('go','disrupt')">Choose scenario</button></div></div>`;
+const head=(t,s)=>`<div><h2>${t}</h2><p class="sub">${s}</p></div>`;
+const sev=x=>x>.15?['R','Critical']:x>0?['A','Moderate']:['G','Stable'];
+function cascade(r){if(!S.ran)return'';const w=r.worst,sc=r.sc;if(!w.sh)return`<div class="note ok">No shortage: stock and inbound cover the week.</div>`;
+return`<ol style="margin:0;padding-left:18px;line-height:1.9"><li>${sc.d}</li><li>${w.n}: demand ${fmt(w.dem)}, supply ${fmt(w.supply)}, shortage <b class="R">${fmt(w.sh)}</b></li><li>EV models affected: ${r.pm.map(m=>`${m.n} (-${m.loss})`).join(', ')}</li><li>Assembly capacity falls to <b>${Math.round((1-r.cap)*100)}%</b>, delay ~${r.days} days</li><li><b class="R">${fmt(r.orders)}</b> customer orders at risk</li></ol>`}
+/* ---------- pages ---------- */
+const P={
+exec(){const r=R(),b=B0;return`<div class="hero"><h1>The intelligence behind resilient EV manufacturing.</h1><p>One disruption can stop an entire production line. DisruptionIQ predicts the impact, evaluates component risks, and validates intelligent recovery decisions.</p><div class="cta"><button class="pri" onclick="A('go','twin')">Explore digital twin</button><button class="gh" onclick="A('run','disrupt')">Run live simulation</button></div></div>
+<div class="card">${twin(r,0)}<p class="sub" style="font-size:13px">Predict manufacturing risks. Protect critical components. Simulate smarter decisions.</p></div>
+<div class="grid g4">${[['Plant capacity',Math.round((1-r.cap)*100)+'%'],['EV units at risk',fmt(r.units)],['Orders at risk',fmt(r.orders)],['Usable battery packs',r.E.A.G+r.E.B.G]].map(([l,v])=>`<div class="card kpi"><b>${v}</b><span>${l}${S.ran?' · after simulation':' · baseline'}</span></div>`).join('')}</div>
+<div class="grid g2"><div class="card"><h3>Two engines, one platform</h3><p><b class="C">EV manufacturing intelligence</b> maps six critical components to the models that need them.</p><p><b class="C">Thermal-risk-aware eligibility</b> checks stored battery lots before any transfer. Of ${b.E.B.G+b.E.B.A+b.E.B.R} packs in Warehouse B, only <b class="G">${b.E.B.G}</b> pass.</p><p class="sub">Traditional supply chains track what is available. DisruptionIQ understands what is required, what is eligible, what is at risk, and what can actually recover production.</p></div>
+<div class="card"><h3>Alerts</h3>${alerts(r)}</div></div>`},
+ev(){const r=R(),c=S.calc;return`${head('EV manufacturing intelligence','Six critical components, the models that depend on them, and the weekly impact of any delay.')}
+<div class="card" style="overflow:auto"><h3>Component readiness (7-day horizon)</h3><table><tr><th>Component</th><th>Plant stock</th><th>Need/day</th><th>Inbound/day</th><th>Demand</th><th>Supply</th><th>Shortage</th><th>Severity</th></tr>${r.rows.map(x=>{const[k,t]=sev(x.sh/x.dem);return`<tr><td>${x.n}<br><small>${(SUP[x.sup]||{n:'Unknown supplier'}).n}, single-source</small></td><td class="m">${fmt(x.sA)}</td><td class="m">${x.need}</td><td class="m">${x.inb}</td><td class="m">${fmt(x.dem)}</td><td class="m">${fmt(x.supply)}</td><td class="m ${k}">${fmt(x.sh)}</td><td><span class="chip ${k}">${t}</span></td></tr>`}).join('')}</table></div>
+<div class="grid g2"><div class="card"><h3>Dependency map</h3><table><tr><th>Model</th><th>Units/day</th>${COMPS.map(x=>`<th class="m">${x.k}</th>`).join('')}</tr>${MODELS.map(m=>`<tr><td>${m.n}</td><td class="m">${m.d}</td>${COMPS.map(x=>`<td class="m" style="color:${r.worst.k==x.k&&r.worst.sh?'var(--rd)':'var(--ice)'}">${m.u[x.k]}</td>`).join('')}</tr>`).join('')}</table>
+<p class="sub" style="font-size:13px;margin-top:10px">${r.worst.sh?`${r.worst.n} shortage → ${MODELS.map(m=>m.n).join(', ')} affected → assembly capacity ${Math.round((1-r.cap)*100)}% → ${fmt(r.orders)} orders at risk`:'Chain is stable. Run a scenario to see propagation.'}</p></div>
+<div class="card"><h3>Impact calculator</h3><p class="sub" style="font-size:13px">Delay one component shipment and see the production effect.</p><div style="display:flex;gap:10px;margin:10px 0;flex-wrap:wrap"><select id="ck" aria-label="Component" onchange="A('calc')">${COMPS.map(x=>`<option value="${x.k}" ${x.k==c.k?'selected':''}>${x.n}</option>`).join('')}</select><input id="cd" type="range" min="0" max="7" value="${c.d}" oninput="A('calc')" aria-label="Delay days"><b class="m" id="cdv">${c.d} days</b></div><div id="calc"></div></div></div>`},
+twin(){const r=R();return`${head('Digital twin','Select a node for detail. Pick a scenario in the Disruption Center to see impact propagate.')}
+<div class="card">${twin(r,1)}</div><div class="grid g2">${S.sel?node(S.sel,r):'<div class="card"><h3>Node detail</h3><p class="sub">Select any supplier, route, warehouse, the plant or orders.</p></div>'}<div class="card"><h3>Scenario</h3><select id="sc2" onchange="A('sc',this.selectedIndex)" aria-label="Scenario">${SC.map((s,i)=>`<option ${i==S.sc?'selected':''}>${s.n}</option>`).join('')}</select><div class="cta"><button class="pri" onclick="A('run')">Run simulation</button><button class="gh" onclick="A('reset')">Reset</button></div></div></div>`},
+disrupt(){const r=R(),b=B0;return`${head('Disruption center','Six scenarios, each computed from stock, inbound flow, thermal eligibility and model dependencies.')}
+<div class="grid g2"><div class="card">${SC.map((s,i)=>`<button class="sc ${i==S.sc?'on':''}" onclick="A('sc',${i})">${s.n}<small>${s.d}</small></button>`).join('')}<div class="cta"><button class="pri" onclick="A('run')" ${S.running?'disabled':''}>${S.running?'Simulating…':'Run simulation'}</button><button class="gh" onclick="A('reset')">Reset simulation</button></div></div>
+<div class="card"><h3>Before and after</h3>${S.ran?`<table><tr><th>Metric</th><th>Before</th><th>After</th></tr>${[['Plant capacity','100%',Math.round((1-r.cap)*100)+'%'],['EV units at risk',0,fmt(r.units)],['Assembly delay','0 days',r.days+' days'],['Orders at risk',0,fmt(r.orders)],['Order fulfilment','98%',r.ful+'%'],['Usable battery packs',b.E.A.G+b.E.B.G,r.E.A.G+r.E.B.G]].map(x=>`<tr><td>${x[0]}</td><td class="m">${x[1]}</td><td class="m ${x[2]==x[1]?'':'R'}">${x[2]}</td></tr>`).join('')}</table>`:'<p class="sub">Run a scenario to compare metrics.</p>'}</div></div>
+${S.ran?`<div class="card"><h3>Cascading consequences</h3>${cascade(r)}</div><div class="card"><h3>Affected components</h3>${bars(r.rows.map(x=>[x.k.toUpperCase(),x.sh,x.sh?'var(--rd)':'var(--gn)']),Math.max(1,r.worst.sh))}</div>`:''}`},
+thermal(){const r=R(),E=r.E,all=[...r.L.A.map(l=>({...l,w:'A'})),...r.L.B.map(l=>({...l,w:'B'}))],sel=S.wh;
+const x=h=>40+h*26,y=t=>185-(t-20)*6,line=w=>{let p='';for(let h=0;h<24;h++)p+=`${x(h)},${y(T(w,h))} `;return p},ws=sel=='all'?['A','B']:[sel];
+const dots=w=>{let d='',n=0;for(let h=0;h<24;h++){const t=T(w,h);if(t>LIM){n++;d+=`<circle cx="${x(h)}" cy="${y(t)}" r="3.5" fill="${t>=HARD?COL.bad:COL.risk}"/>`}}return{d,n}};
+return`${head('Thermal inventory intelligence','Quantity alone does not make inventory usable. Stored battery lots are checked against configured thermal rules before any allocation.')}
+<div class="note">Demo rules only: thresholds are illustrative (${LIM}°C limit, ${HARD}°C hard limit, ${HRS}h cap) and data is simulated. Temperature does not establish battery safety or health. Real release needs battery condition assessment and authorized inspection.</div>
+<div class="grid g3">${[['G','Green: eligible','Passes configured storage checks'],['A','Amber: conditional review','Needs inspection before use'],['R','Red: not eligible','Cannot be auto-allocated']].map(([k,t,d])=>`<div class="card kpi"><b class="${k}">${E.A[k]+E.B[k]}</b><span><b class="${k}">${t}</b><br>${d}</span></div>`).join('')}</div>
+<div class="grid g2"><div class="card"><h3>24-hour temperature timeline</h3><div style="margin-bottom:8px"><select onchange="A('wh',this.value)" aria-label="Warehouse"><option value="all">Compare A and B</option><option value="A" ${sel=='A'?'selected':''}>Warehouse A</option><option value="B" ${sel=='B'?'selected':''}>Warehouse B</option></select></div>
+<div class="tw"><svg viewBox="0 0 660 210"><rect x="40" y="${y(35)}" width="598" height="${185-y(35)}" fill="#36D6A0" opacity=".08"/><line x1="40" x2="638" y1="${y(35)}" y2="${y(35)}" stroke="#36D6A0" stroke-dasharray="4 4"/><text x="44" y="${y(35)-5}" fill="#36D6A0" font-size="10">safe range up to ${LIM}°C</text>${[20,35,45].map(t=>`<text x="4" y="${y(t)+4}" fill="#6f819a" font-size="10">${t}°</text>`).join('')}${ws.map(w=>`<polyline points="${line(w)}" fill="none" stroke="${w=='A'?'#00D5FF':'#8BEAFF'}" stroke-width="2"/>${dots(w).d}`).join('')}<text x="40" y="205" fill="#6f819a" font-size="10">00:00</text><text x="600" y="205" fill="#6f819a" font-size="10">23:00</text></svg></div>
+<p class="m" style="font-size:12px">${ws.map(w=>`Warehouse ${w}: ${dots(w).n}h above limit`).join(' · ')}</p></div>
+<div class="card"><h3>Eligibility by warehouse</h3>${['A','B'].map(w=>{const e=E[w],t=e.G+e.A+e.R;return`<p>Warehouse ${w}: ${t} packs</p><div class="stk">${['G','A','R'].map(k=>`<i style="width:${e[k]/t*100}%;background:${COL[{G:'ok',A:'risk',R:'bad'}[k]]}"></i>`).join('')}</div><small class="m">eligible ${e.G} · review ${e.A} · excluded ${e.R}</small>`}).join('')}
+<p class="sub" style="font-size:13px;margin-top:12px">Warehouse B holds 200 packs but only <b class="G">${E.B.G}</b> are eligible for recovery. <b class="A">${E.B.A}</b> await review and <b class="R">${E.B.R}</b> are excluded, so a recovery plan can never move all 200.</p></div></div>
+<div class="card" style="overflow:auto"><h3>Why each lot is approved, reviewed or rejected</h3><table><tr><th>Lot</th><th>Packs</th><th>Peak</th><th>Hours above limit</th><th>Status</th><th>Reason</th></tr>${all.map(l=>`<tr><td class="m">${l.id}</td><td class="m">${l.q}</td><td class="m">${l.peak}°C</td><td class="m">${l.h}h</td><td><span class="chip ${cls(l)}">${{G:'ELIGIBLE',A:'REVIEW',R:'NOT ELIGIBLE'}[cls(l)]}</span></td><td>${why(l)}</td></tr>`).join('')}</table></div>`},
+rec(){const r=R();if(!S.ran)return head('AI recovery','Three recovery strategies, evaluated and validated.')+empty;const p=plans(r);if(!p)return head('AI recovery','')+`<div class="note ok">No shortage, so no recovery is needed.</div>`;
+return`${head('AI recovery','Rule-based decision support. No language model is used for these numbers, and every option passes the validation layer first.')}
+<div class="card" style="border-color:var(--cy)"><h3>Recommended plan</h3><p>${p.bun.map(b=>`<b>${b.p.n}</b> (${fmt(b.t)} units)`).join(' + ')}</p><p class="m">Recovers ${fmt(p.rec)} of ${fmt(p.sh)} short units · ${p.days} days · cost Rs ${fmt(p.cost)} · plant capacity ${Math.round((1-r.cap)*100)}% → ${Math.round((1-p.capAfter)*100)}%</p><p class="sub" style="font-size:13px">Cheapest validated options come first. Thermally ineligible stock is never moved.${p.left?` ${fmt(p.left)} units stay uncovered; escalate to procurement.`:''}</p><div class="cta"><button class="pri" onclick="A('go','appr')">Send for approval</button></div></div>
+<div class="grid g3">${p.all.filter(x=>!x.nv).map(x=>`<div class="card" style="border-color:${x.ok?'var(--ln)':'#6b2431'}"><h3>${x.id}. ${x.n}</h3><p><span class="chip ${x.ok?'G':'R'}">${x.ok?'VALID':'REJECTED'}</span></p><table>${[['Units recovered',fmt(x.q)],['Recovery time',x.days+' days'],['Added cost','Rs '+fmt(x.cost)],['Orders recovered',fmt(x.ord)],['Secondary risk',x.ok?x.risk:'n/a'],['Feasibility',x.ok?'Feasible':'Not feasible']].map(a=>`<tr><td>${a[0]}</td><td class="m">${a[1]}</td></tr>`).join('')}</table>${x.ok?'':`<p class="R" style="font-size:13px">${x.reason}</p>`}</div>`).join('')}</div>`},
+val(){const r=R();if(!S.ran)return head('Validation center','Every recovery option is checked before it is recommended.')+empty;const p=plans(r);if(!p)return head('Validation center','')+`<div class="note ok">No recovery plans to validate.</div>`;
+return`${head('Validation center','DisruptionIQ does not blindly trust recommendations. Each plan faces eight checks.')}${p.all.map(x=>`<div class="card" style="border-color:${x.ok?'var(--ln)':'#6b2431'}"><h3>Option ${x.id}: ${x.n} <span class="chip ${x.ok?'G':'R'}">${x.ok?'PASSED':'REJECTED'}</span></h3>${x.ok?'':`<div class="note bad">Recovery Option ${x.id} rejected: ${x.reason.endsWith('.')?x.reason:x.reason+'.'}</div>`}<table style="margin-top:8px">${x.c.map(c=>`<tr><td>${c[0]}</td><td class="${c[1]?'G':'R'} m">${c[1]?'PASS':'FAIL'}</td><td>${c[2]}</td></tr>`).join('')}</table></div>`).join('')}`},
+appr(){const r=R();if(!S.ran)return head('Approval workflow','')+empty;const p=plans(r);if(!p)return head('Approval workflow','')+`<div class="note ok">No recovery plan needed.</div>`;
+const rl=['Supply planner','Procurement manager','Plant head'],done=S.appr.every(x=>x);
+return`${head('Approval workflow','Three sign-offs release the validated plan.')}<div class="card"><h3>Plan: ${p.bun.map(b=>b.p.n).join(' + ')}</h3>${rl.map((n,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--ln)"><span>${n}</span>${S.appr[i]?'<span class="chip G">APPROVED</span>':`<button class="pri" ${i&&!S.appr[i-1]?'disabled':''} onclick="A('ap',${i})">Approve</button>`}</div>`).join('')}</div>
+${done?`<div class="card" style="border-color:var(--gn)"><h3>Projected recovery outcome</h3><table><tr><th>Metric</th><th>Disrupted</th><th>After recovery</th></tr>${[['Plant capacity',Math.round((1-r.cap)*100)+'%',Math.round((1-p.capAfter)*100)+'%'],['EV units at risk',fmt(r.units),fmt(p.unitsAfter)],['Orders at risk',fmt(r.orders),fmt(p.ordAfter)],['Order fulfilment',r.ful+'%',(98-p.capAfter*100).toFixed(1)+'%'],['Recovery time','-',p.days+' days'],['Added cost','-','Rs '+fmt(p.cost)]].map(x=>`<tr><td>${x[0]}</td><td class="m R">${x[1]}</td><td class="m G">${x[2]}</td></tr>`).join('')}</table></div>`:''}`},
+ana(){const r=R(),p=S.ran&&plans(r);return`${head('Analytics and reports','Simulated data. Figures follow the latest scenario run.')}
+<div class="grid g2"><div class="card"><h3>EV production impact (units lost)</h3>${bars(r.pm.map(m=>[m.n,m.loss,'var(--rd)']),Math.max(10,...r.pm.map(m=>m.loss)))}</div>
+<div class="card"><h3>Component availability (days of cover)</h3>${bars(r.rows.map(x=>[x.k.toUpperCase(),+x.cover.toFixed(1),x.cover<1.2?'var(--am)':'var(--gn)']),2,0).replace(/<b>(\d+(\.\d)?)<\/b>/g,'<b>$1 d</b>')}</div>
+<div class="card"><h3>Thermal eligibility distribution</h3>${['A','B'].map(w=>{const e=r.E[w],t=e.G+e.A+e.R;return`<p>Warehouse ${w}</p><div class="stk">${['G','A','R'].map(k=>`<i style="width:${e[k]/t*100}%;background:${COL[{G:'ok',A:'risk',R:'bad'}[k]]}"></i>`).join('')}</div>`}).join('')}</div>
+<div class="card"><h3>Supplier reliability (%)</h3>${bars(Object.values(SUP).map(s=>[s.n,s.rel,'var(--cy)']),100)}</div>
+<div class="card"><h3>Shipment delays (days)</h3>${bars(Object.keys(SUP).map(k=>[SUP[k].n,Math.max(0,...r.rows.filter(x=>x.sup==k).map(x=>x.dl)),'var(--am)']),4)}</div>
+<div class="card"><h3>Battery inventory by warehouse</h3>${bars([['WH A eligible',r.E.A.G,'var(--gn)'],['WH A other',r.E.A.A+r.E.A.R,'var(--rd)'],['WH B eligible',r.E.B.G,'var(--gn)'],['WH B other',r.E.B.A+r.E.B.R,'var(--rd)']],300)}</div>
+<div class="card"><h3>Recovery strategy comparison (units)</h3>${p?bars(p.all.filter(x=>!x.nv).map(x=>[x.id+'. '+x.n.split(' ')[0],x.ok?x.q:0,x.ok?'var(--cy)':'var(--rd)']),Math.max(1,p.sh)):'<p class="sub">Run a scenario with a shortage.</p>'}</div>
+<div class="card"><h3>Customer order fulfilment</h3>${bars([['Baseline',98,'var(--gn)',0],['Disrupted',r.ful,'var(--am)'],['After recovery',p?+(98-p.capAfter*100).toFixed(1):98,'var(--cy)']].map(a=>[a[0],a[1],a[2],a[1]+'%']),100)}</div></div>`}};
+function T(w,h){let b=w=='A'?27+Math.sin(h/4):29+Math.sin(h/3);if(w=='B'&&h>=8&&h<=18)b+=15*Math.sin((h-8)/10*Math.PI);if(w=='A'&&R().sc.thermal&&h>=10&&h<=17)b+=16*Math.sin((h-10)/7*Math.PI);return b}
+function alerts(r){const a=[];a.push(['A',`Warehouse B: ${r.E.B.R} packs excluded and ${r.E.B.A} under review after thermal excursion`]);if(S.ran){a.unshift(r.worst.sh?['R',`${r.sc.n}: ${r.worst.n} short by ${fmt(r.worst.sh)}`]:['G','Scenario absorbed with no shortage']);}
+if(r.sc&&r.sc.thermal)a.push(['A',`Warehouse A: ${r.E.A.R} packs not eligible`]);return a.map(x=>`<p style="margin:6px 0"><b class="${x[0]}">●</b> ${x[1]}</p>`).join('')}
+/* ---------- app ---------- */
+function calcOut(){const c=S.calc,r=sim({dl:{[c.k]:c.d}});$('#calc').innerHTML=`<table>${[['Shortage',fmt(r.worst.sh)+' '+r.worst.k],['Affected EV units',fmt(r.units)],['Capacity reduction',(r.cap*100).toFixed(1)+'%'],['Estimated assembly delay',r.days+' days'],['Orders impacted',fmt(r.orders)]].map(x=>`<tr><td>${x[0]}</td><td class="m">${x[1]}</td></tr>`).join('')}</table>`}
+function render(){const t=PAGES.find(p=>p[0]==S.page);
+$('#nav').innerHTML=`<div class="logo">Disruption<b>IQ</b></div>`+PAGES.map(p=>`<a tabindex="0" class="${p[0]==S.page?'on':''}" onclick="A('go','${p[0]}')">${p[1]}</a>`).join('');
+$('#top').innerHTML=`<div class="crumb">DisruptionIQ / <b>${t[1]}</b></div><div class="tags"><span class="pill sim">SIMULATED DATA · OVERCLOCK’26 DEMO</span><button class="gh" onclick="A('bell')" aria-label="Notifications">Alerts ${alerts(R()).length}</button><button class="gh" onclick="A('reset')">Reset</button><button class="pri" onclick="A('demo')">Launch judge demo</button></div>${S.bell?`<div class="card bell"><h3>Notifications</h3>${alerts(R())}</div>`:''}`;
+try{$('#app').innerHTML=`<div class="pg">${P[S.page]()}</div>`}catch(e){$('#app').innerHTML=`<div class="note bad">This page could not load: ${e.message}. Use Reset to restore the demo.</div>`}
+if(S.page=='ev')calcOut();renderDemo()}
+function runNow(){S.res=sim(SC[S.sc]);S.ran=true;S.appr=[0,0,0];S.running=false}
+const DS=[
+['Battery shipment delayed','CellForge ships three days late on route R1.',()=>{S.sc=0;go('disrupt')}],
+['EV manufacturing intelligence','Affected models and production orders are identified.',()=>{runNow();go('ev')}],
+['Thermal eligibility','Battery stock is checked by lot. Warehouse B can offer only its eligible packs.',()=>go('thermal')],
+['Digital twin','The disruption cascades from supplier to plant to customer orders.',()=>go('twin')],
+['AI recovery','Three strategies are generated and scored with rule-based calculations.',()=>go('rec')],
+['Validation rejects an unsafe option','The naive transfer of all 200 packs fails thermal and stock checks.',()=>go('val')],
+['Best feasible strategy','Cheapest validated options are stacked until the shortage is covered.',()=>go('rec')],
+['Approve the plan','Three approvals release the recovery plan.',()=>go('appr')],
+['Projected outcome','Approval complete. Review recovered capacity and orders.',()=>{S.appr=[1,1,1];go('appr')}]];
+function renderDemo(){const d=S.demo,el=$('#demo');if(d<0){el.innerHTML='';return}
+el.innerHTML=`<div class="card demo"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><div><b class="C">Step ${d+1} of ${DS.length}</b><h3>${DS[d][0]}</h3><p class="sub" style="font-size:13px;margin:2px 0 0">${DS[d][1]}</p></div><div class="cta" style="margin:0;align-self:center"><button class="gh" onclick="A('exit')">Exit</button><button class="pri" onclick="A('next')">${d==DS.length-1?'Finish':d==7?'Approve plan':'Next'}</button></div></div></div>`}
+function go(p){S.page=p;S.bell=false;location.hash=p;render();scrollTo(0,0)}
+function A(a,v){if(a=='go')go(v);
+else if(a=='sel'){S.sel=v;render()}
+else if(a=='sc'){S.sc=v;render()}
+else if(a=='wh'){S.wh=v;render()}
+else if(a=='bell'){S.bell=!S.bell;render()}
+else if(a=='calc'){S.calc={k:$('#ck').value,d:+$('#cd').value};$('#cdv').textContent=S.calc.d+' days';calcOut()}
+else if(a=='run'){S.running=true;if(v)S.page=v;render();setTimeout(()=>{runNow();render()},1100)}
+else if(a=='reset'){S.res=null;S.ran=false;S.running=false;S.appr=[0,0,0];S.sel=null;S.demo=-1;S.sc=0;S.wh='all';S.calc={k:'bat',d:3};S.bell=false;render()}
+else if(a=='ap'){S.appr[v]=1;render()}
+else if(a=='demo'){A('reset');S.demo=0;DS[0][2]()}
+else if(a=='next'){if(S.demo>=DS.length-1){S.demo=-1;render()}else{S.demo++;DS[S.demo][2]()}}
+else if(a=='exit'){S.demo=-1;render()}}
+addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(PAGES.some(p=>p[0]==h)&&h!=S.page){S.page=h;render()}});
+{const h=location.hash.slice(1);if(PAGES.some(p=>p[0]==h))S.page=h}
+render();
+</script></body></html>
